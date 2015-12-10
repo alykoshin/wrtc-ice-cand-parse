@@ -47,6 +47,6 @@
   },
   "dependencies": {
     "mini-debug": "0.0.3",
-    "mini-enum": "0.0.4"
+    "mini-enum": "0.0.5"
   }
 }
