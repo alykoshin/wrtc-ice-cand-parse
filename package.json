@@ -46,6 +46,7 @@
     "mockery": "^1.4.0"
   },
   "dependencies": {
+    "mini-debug": "0.0.2",
     "mini-enum": "0.0.4"
   }
 }
