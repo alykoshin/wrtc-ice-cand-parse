@@ -1,4 +1,4 @@
-[![npm version](https://badge.fury.io/js/wrtc-ice-cand-parse.svg)](http://badge.fury.io/js/wrtc-ice-cand-parsel)
+[![npm version](https://badge.fury.io/js/wrtc-ice-cand-parse.svg)](http://badge.fury.io/js/wrtc-ice-cand-parse)
 
 [![Dependency Status](https://david-dm.org/alykoshin/wrtc-ice-cand-parse/status.svg)](https://david-dm.org/alykoshin/wrtc-ice-cand-parse#info=dependencies)
 [![devDependency Status](https://david-dm.org/alykoshin/wrtc-ice-cand-parse/dev-status.svg)](https://david-dm.org/alykoshin/wrtc-ice-cand-parse#info=devDependencies)
@@ -17,9 +17,11 @@ If you have different needs regarding the functionality, please add a [feature r
 ## Installation
 
 ```sh
-npm install wrtc-ice-cand-parse --save
+npm install --save wrtc-ice-cand-parse
 ```
 
 ## Usage
 
 Not yet ready for public usage.
+
+type and transport are case-sensitive, i.e. TCP and tcp are different, to compare you need to lowerCase them.

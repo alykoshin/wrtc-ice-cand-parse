@@ -4,9 +4,9 @@
   "description": "WRTC Ice Candidate parse",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 0",
-    "_test": "echo \"Error: no test specified\" && exit 1",
-    "__test": "./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha -- -R spec ./test/*",
+    "_test": "echo \"Error: no test specified\" && exit 0",
+    "__test": "echo \"Error: no test specified\" && exit 1",
+    "test": "./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha -- -R spec ./test/*",
     "test-travis": "./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha -- -R spec ./test/*",
     "_commit": "git commit -am \"commit by 'npm run commit'\"",
     "_push": "git push --follow-tags",
@@ -44,5 +44,8 @@
     "istanbul": "^0.4.1",
     "mocha": "^2.3.4",
     "mockery": "^1.4.0"
+  },
+  "dependencies": {
+    "mini-enum": "0.0.4"
   }
 }
