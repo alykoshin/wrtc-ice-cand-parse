@@ -1,6 +1,6 @@
 {
   "name": "wrtc-ice-cand-parse",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "WRTC Ice Candidate parse",
   "main": "index.js",
   "scripts": {
