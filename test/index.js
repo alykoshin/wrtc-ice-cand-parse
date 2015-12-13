@@ -2,9 +2,10 @@
 
 /* globals describe, before, after, it */
 
-var chai = require('chai')
-  , expect = chai.expect
-  , should = chai.should();
+var chai = require('chai'),
+    assert = chai.assert,
+    expect = chai.expect,
+    should = chai.should();
 
 describe('#node tests', function() {
 
