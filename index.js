@@ -89,7 +89,7 @@ var ICE_TRANSPORT = Enum({
  */
 function parseIceCandidate(candidateString) {
   // token                  =  1*(alphanum / "-" / "." / "!" / "%" / "*"
-  //                           / "_" / "+" / "`" / "'" / "~" ) */
+  //                              / "_" / "+" / "`" / "'" / "~" )
   var token_re              = '[0-9a-zA-Z\\-\\.!\\%\\*_\\+\\`\\\'\\~]+';
 
   // ice-char               = ALPHA / DIGIT / "+" / "/"
