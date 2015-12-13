@@ -40,13 +40,13 @@
   "homepage": "https://github.com/alykoshin/wrtc-ice-cand-parse",
   "devDependencies": {
     "chai": "^3.4.1",
-    "coveralls": "^2.11.4",
+    "coveralls": "^2.11.6",
     "istanbul": "^0.4.1",
     "mocha": "^2.3.4",
     "mockery": "^1.4.0"
   },
   "dependencies": {
     "mini-debug": "0.0.3",
-    "mini-enum": "0.0.5"
+    "mini-enum": "0.0.6"
   }
 }

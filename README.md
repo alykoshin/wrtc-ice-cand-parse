@@ -10,23 +10,36 @@ wrtc-ice-cand-parse
 
 WRTC Ice Candidate parse
 
-This package allows to parse WebRTC ICE candidates string `'candidate:3689538886 1 udp 2122199807 1234:5678:9abc:def0:6deb:9894:734:f75f 32950 typ host generation 0'` to JSON object 
-`{ foundation: '3689538886',
-  component_id: '1',
-  transport: 'udp',
-  priority: '2122199807',
-  localIP: '1234:5678:9abc:def0:6deb:9894:734:f75f',
-  localPort: '32950',
-  type: 'host',
-  remoteIP: undefined,
-  remotePort: undefined,
-  generation: '0' }` and vice versa.
-  
 This package is part of WRTC project.
 
 Not yet ready for public usage.
 
+Small helper to parse WebRTC ICE candidates string 
+
+```
+'candidate:2 1 UDP 92274687 12.123.12.123 12345 typ relay raddr 12.123.12.123 rport 54321'
+```
+
+ to JSON object 
+ 
+```
+{ foundation: '2',
+  component_id: '1',
+  transport: 'UDP',
+  priority: '92274687',
+  localIP: '12.123.12.123',
+  localPort: '12345',
+  type: 'relay',
+  remoteIP: '12.123.12.123',
+  remotePort: '54321',
+  generation: undefined }
+``` 
+and stringify it back.
+
+If some field is not present in original strig,
+  
 If you have different needs regarding the functionality, please add a [feature request](https://github.com/alykoshin/wrtc-ice-cand-parse/issues).
+
 
 ## Installation
 
@@ -49,7 +62,7 @@ File `examples/parse.js`:
 //iceParse = require('wrtc-ice-cand-parse');
 var iceParse = require('../index.js');
 
-var origStr = 'candidate:3689538886 1 udp 2122199807 1234:5678:9abc:def0:6deb:9894:734:f75f 32950 typ host generation 0';
+var origStr = 'candidate:2 1 UDP 92274687 12.123.12.123 12345 typ relay raddr 12.123.12.123 rport 54321';
 
 var candObj = iceParse.parse(origStr);
 console.log('candObj:', candObj);
@@ -61,18 +74,19 @@ console.log('candStr:', candStr);
 ```
 node examples/parse.js 
 ```
+
 ```
-candObj: { foundation: '3689538886',
+candObj: { foundation: '2',
   component_id: '1',
-  transport: 'udp',
-  priority: '2122199807',
-  localIP: '1234:5678:9abc:def0:6deb:9894:734:f75f',
-  localPort: '32950',
-  type: 'host',
-  remoteIP: undefined,
-  remotePort: undefined,
-  generation: '0' }
-candStr: candidate:3689538886 1 udp 2122199807 1234:5678:9abc:def0:6deb:9894:734:f75f 32950 typ host generation 0
+  transport: 'UDP',
+  priority: '92274687',
+  localIP: '12.123.12.123',
+  localPort: '12345',
+  type: 'relay',
+  remoteIP: '12.123.12.123',
+  remotePort: '54321',
+  generation: undefined }
+candStr: candidate:2 1 UDP 92274687 12.123.12.123 12345 typ relay raddr 12.123.12.123 rport 54321
 ```
 
 

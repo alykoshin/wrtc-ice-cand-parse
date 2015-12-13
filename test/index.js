@@ -146,12 +146,12 @@ describe('#node tests', function() {
 
   it('should isRelayCandidate (Firefox and) new Chrome format for host and IPv6', function () {
     var str1 = 'candidate:3689538886 1 udp 2122199807 1234:5678:9abc:def0:6deb:9894:734:f75f 32950 typ host generation 0';
-    expect(wrtc_ice_cand_parse.isRelayCandidate(str1)).be.false;
+    expect(wrtc_ice_cand_parse.isRelay(str1)).be.false;
   });
 
   it('should isRelayCandidate (Firefox and) new Chrome format for host and IPv6', function () {
     var str1 = 'candidate:2 1 UDP 92274687 12.123.12.123 49185 typ relay raddr 12.123.12.123 rport 49185';
-    expect(wrtc_ice_cand_parse.isRelayCandidate(str1)).be.true;
+    expect(wrtc_ice_cand_parse.isRelay(str1)).be.true;
   });
 
 });

@@ -82,12 +82,26 @@ var ICE_TRANSPORT = Enum({
  * @typedef  {{foundation:string, component_id:string, transport: string, priority: string, localIP: string, localPort: string, type: string, remoteIP: string, remotePort: string, generation: string}} ParsedIce
  */
 
+
+/**
+ * Validate ICE Candidate Object (minimal)
+ *
+ * @param candObj
+ * @returns boolean
+ */
+function validate(candObj) {
+  var res = ICE_TYPE.check(candObj.type.toLowerCase());
+  res = res && ICE_TRANSPORT.check(candObj.transport.toLowerCase());
+  if (!res) { debug.warn('wrtc-ice-cand-parse: validate(): candObj validation failed'); }
+  return res;
+}
+
 /**
  *
  * @param {string} candidateString
  * @returns {ParsedIce}
  */
-function parseIceCandidate(candidateString) {
+function parse(candidateString) {
   // token                  =  1*(alphanum / "-" / "." / "!" / "%" / "*"
   //                              / "_" / "+" / "`" / "'" / "~" )
   var token_re              = '[0-9a-zA-Z\\-\\.!\\%\\*_\\+\\`\\\'\\~]+';
@@ -104,11 +118,6 @@ function parseIceCandidate(candidateString) {
   // transport             = "UDP" / transport-extension
   // transport-extension   = token      ; from RFC 3261
   var transport_re          = token_re;
-
-  // ICE_TRANSPORT.TCP.toLowerCase() + '|' +
-  // ICE_TRANSPORT.UDP.toLowerCase() + '|' +
-  // ICE_TRANSPORT.TCP.toUpperCase() + '|' +
-  // ICE_TRANSPORT.UDP.toUpperCase() ,
 
   // priority              = 1*10DIGIT
   var priority_re           = '[0-9]{1,10}';
@@ -130,7 +139,7 @@ function parseIceCandidate(candidateString) {
   // ICE_TYPE.PRFLX + '|' +
   // ICE_TYPE.RELAY ;
 
-  var ICE_RE = /*'a=' +*/ 'candidate:(' + foundation_re + ')' + // candidate:599991555 // 'a=' not passed for Firefox (and now for Chrome too)
+  var ICE_RE = '(?:a=)?candidate:(' + foundation_re + ')' + // candidate:599991555 // 'a=' not passed for Firefox (and now for Chrome too)
     '\\s' + '(' + component_id_re       + ')' +                 // 2
     '\\s' + '(' + transport_re          + ')' +                 // udp
     '\\s' + '(' + priority_re           + ')' +                 // 2122260222
@@ -156,29 +165,51 @@ function parseIceCandidate(candidateString) {
 //  debug.log('parseIceCandidate(): pattern:', pattern);
 //  debug.log('parseIceCandidate(): parsed:', parsed);
 
-  // Check validity
+  // Check if the string was successfully parsed
   if ( !parsed ) {
     debug.warn('parseIceCandidate(): parsed is empty: \'' + parsed + '\'');
     return null;
   }
-  var type = parsed[7] ? parsed[7] : null;
-  ICE_TYPE.check(type.toLowerCase());
+  //var type = parsed[7] ? parsed[7] : null;
+  //ICE_TYPE.check(type.toLowerCase());
+  //
+  //var transport = parsed[3];
+  //ICE_TRANSPORT.check(transport.toLowerCase());
 
-  var transport = parsed[3];
-  ICE_TRANSPORT.check(transport.toLowerCase());
+  var propNames = [
+    'foundation',
+    'component_id',
+    'transport',
+    'priority',
+    'localIP',
+    'localPort',
+    'type',
+    'remoteIP',
+    'remotePort',
+    'generation'
+  ];
 
-  return {
-    foundation: parsed[1],
-    component_id: parsed[2],
-    transport:  transport,
-    priority:   parsed[4],
-    localIP:    parsed[5],
-    localPort:  parsed[6],
-    type:       type,
-    remoteIP:   parsed[8],
-    remotePort: parsed[9],
-    generation: parsed[10]
-  };
+  var candObj = {};
+  for (var i=0; i<propNames.length; i++) {
+    candObj[ propNames[i] ] = parsed[i+1];
+  }
+
+  validate(candObj);
+
+  //var candObj = {
+  //  foundation: parsed[1],
+  //  component_id: parsed[2],
+  //  transport:  transport,
+  //  priority:   parsed[4],
+  //  localIP:    parsed[5],
+  //  localPort:  parsed[6],
+  //  type:       type,
+  //  remoteIP:   parsed[8],
+  //  remotePort: parsed[9],
+  //  generation: parsed[10]
+  //};
+
+  return candObj;
 }
 
 /**
@@ -209,27 +240,29 @@ var stringify = function(iceCandObj, options) {
 /**
  *
  *
- * @param {string} candidateString
+ * @param {string} candStr
  * @returns {boolean}
  */
-function isRelayCandidate( candidateString ) {
-  /** @type {ParsedIce} **/
-  var parsed = parseIceCandidate( candidateString );
-  return (parsed.type && parsed.type.toLowerCase() === ICE_TYPE.RELAY);
+function isRelay( candStr ) {
+  debug.warn('isRelay(): deprecated.');
+  var candObj = parse( candStr );
+  return (candObj.type && candObj.type.toLowerCase() === ICE_TYPE.RELAY);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
 if (typeof module !== 'undefined') {
   module.exports = {
-    parse: parseIceCandidate,
+    parse:     parse,
     stringify: stringify,
-    isRelayCandidate: isRelayCandidate
+    validate:  validate,
+    isRelay:   isRelay
   };
 }
 
 if (typeof window !== 'undefined') {
-  window.parseIceCandidate = parseIceCandidate;
+  window.parseIceCandidate     = parse;
   window.stringifyIceCandidate = stringify;
-  window.isRelayCandidate  = isRelayCandidate;
+  window.validateIceCandidate  = validate;
+  window.isRelayIceCandidate   = isRelay;
 }
