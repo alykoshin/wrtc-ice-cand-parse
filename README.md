@@ -51,8 +51,12 @@ npm install --save wrtc-ice-cand-parse
 
 Not yet ready for public usage.
 
-type and transport are case-sensitive, i.e. TCP and tcp are different, to compare you need to lowerCase them.
+'type' and 'transport' properties are case-sensitive, i.e. type 'TCP' and type 'tcp' are different, to compare you need to lowerCase them.
 
+## Methods
+### parse
+### stringify
+### validate
 
 ## Example
 
@@ -66,6 +70,8 @@ var origStr = 'candidate:2 1 UDP 92274687 12.123.12.123 12345 typ relay raddr 12
 
 var candObj = iceParse.parse(origStr);
 console.log('candObj:', candObj);
+
+console.log('validate():', iceParse.validate(candObj));
 
 var candStr = iceParse.stringify(candObj);
 console.log('candStr:', candStr);
@@ -86,6 +92,7 @@ candObj: { foundation: '2',
   remoteIP: '12.123.12.123',
   remotePort: '54321',
   generation: undefined }
+validate(): true
 candStr: candidate:2 1 UDP 92274687 12.123.12.123 12345 typ relay raddr 12.123.12.123 rport 54321
 ```
 

@@ -6,5 +6,7 @@ var origStr = 'candidate:2 1 UDP 92274687 12.123.12.123 12345 typ relay raddr 12
 var candObj = iceParse.parse(origStr);
 console.log('candObj:', candObj);
 
+console.log('validate():', iceParse.validate(candObj));
+
 var candStr = iceParse.stringify(candObj);
 console.log('candStr:', candStr);
